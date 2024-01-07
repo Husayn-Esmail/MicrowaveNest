@@ -10,8 +10,8 @@ export default class BuildingList extends Component {
     this.retrieveBuildings = this.retrieveBuildings.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveBuilding = this.setActiveBuilding.bind(this);
-    // this.removeAllBuildings = this.removeAllBuildings.bind(this);
-    // this.searchBuildingName = this.searchBuildingName.bind(this);
+    this.removeAllBuildings = this.removeAllBuildings.bind(this);
+    this.searchBuildingName = this.searchBuildingName.bind(this);
 
     this.state = {
       buildings: [],
@@ -36,12 +36,18 @@ export default class BuildingList extends Component {
   retrieveBuildings() {
     BuildingDataService.getAll()
       .then((response) => {
+        console.log(
+          '******************8get all is being called********************'
+        );
         this.setState({
           buildings: response.data,
         });
         console.log(response.data);
       })
       .catch((e) => {
+        console.log(
+          '******************get all is erroring out******************'
+        );
         console.log(e);
       });
   }
@@ -61,33 +67,37 @@ export default class BuildingList extends Component {
     });
   }
 
-  //   removeAllBuildings() {
-  //     BuildingDataService.deleteAll()
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         this.refreshList();
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   }
+  removeAllBuildings() {
+    BuildingDataService.deleteAll()
+      .then((response) => {
+        console.log(response.data);
+        this.refreshList();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
-  //   searchBuildingName() {
-  //     BuildingDataService.findByName(this.state.searchBuildingName)
-  //       .then((response) => {
-  //         this.setState({
-  //           buildings: response.data,
-  //         });
-  //         console.log(response.data);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   }
+  searchBuildingName() {
+    BuildingDataService.findByName(this.state.searchBuildingName)
+      .then((response) => {
+        this.setState({
+          buildings: response.data,
+        });
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   render() {
-    const { searchBuildingName, buildings, currentBuilding, currentIndex } =
-      this.state;
+    const buildings = this.state.buildings;
+    const currentBuilding = this.state.currentBuilding;
+    const currentIndex = this.state.currentIndex;
+    const searchBuildingName = this.state.searchBuildingName;
+    // const { searchBuildingName, buildings, currentBuilding, currentIndex } =
+    //   this.state;
 
     return (
       <div className="list row text-center">
@@ -98,7 +108,7 @@ export default class BuildingList extends Component {
               className="form-control"
               placeholder="Search by Name"
               value={searchBuildingName}
-              onChange={this.onChangeSearchName}
+              onChange={this.onChangeSearchBuildingName}
             />
             <div className="input-group-append">
               <button
@@ -130,12 +140,12 @@ export default class BuildingList extends Component {
               ))}
           </ul>
 
-          {/* <button
+          <button
             className="m-3 btn btn-sm btn-danger"
             onClick={this.removeAllBuildings}
           >
             Remove All
-          </button> */}
+          </button>
         </div>
         <div className="container">
           <div className="row col-md-6">

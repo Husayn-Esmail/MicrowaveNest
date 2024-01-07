@@ -9,17 +9,17 @@ module.exports = (app) => {
   // Retrieve all Buildings
   router.get('/buildings', buildings.findAll);
 
-  //   // Retrieve a single Buildings with id
-  //   router.get('/buildings/:id', buildings.findOne);
+  // Retrieve a single Buildings with id
+  router.get('/buildings/:id', buildings.findOne);
 
-  //   // Update a Buildings with id
-  //   router.put('/buildings/:id', buildings.update);
+  // Update a Buildings with id
+  router.put('/buildings/:id', buildings.update);
 
-  //   // Delete a Buildings with id
-  //   router.delete('/buildings/:id', buildings.delete);
+  // Delete a Buildings with id
+  router.delete('/buildings/:id', buildings.delete);
 
-  //   // delete all Buildings
-  //   router.delete('/buildings', buildings.deleteAll);
+  // delete all Buildings
+  router.delete('/buildings', buildings.deleteAll);
 
   app.use('/buildings', router);
 };

@@ -15,7 +15,6 @@ exports.create = (req, res) => {
   const building = {
     name: req.body.name,
     building_hours: req.body.building_hours,
-    //published: req.body.published ? req.body.published : false
   };
 
   // Save Building in the database
@@ -32,14 +31,16 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  const name = req.query.name;
-  var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
-
-  Building.findAll({ where: condition })
+  // const name = req.query.name;
+  // var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
+  console.log(`***********${JSON.stringify(res.body)}********`);
+  Building.findAll()
     .then((data) => {
+      console.log('THROUGH FIND ALL IN BUILDING CONTROLLER');
       res.send(data);
     })
     .catch((err) => {
+      console.log('ERROR OCCURRED DURDING BUILDING CONTROLLER');
       res.status(500).send({
         message:
           err.message || 'Some error occurred while retrieving buildings.',
@@ -47,86 +48,86 @@ exports.findAll = (req, res) => {
     });
 };
 
-// exports.findOne = (req, res) => {
-//   const id = req.params.id;
+exports.findOne = (req, res) => {
+  const id = req.params.id;
 
-//   Building.findByPk(id)
-//     .then((data) => {
-//       if (data) {
-//         res.send(data);
-//       } else {
-//         res.status(404).send({
-//           message: `Cannot find Building with id=${id}.`,
-//         });
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message: `Error retrieving Building with id=${id}.`,
-//       });
-//     });
-// };
+  Building.findByPk(id)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Building with id=${id}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Error retrieving Building with id=${id}.`,
+      });
+    });
+};
 
-// exports.update = (req, res) => {
-//   const id = req.params.id;
+exports.update = (req, res) => {
+  const id = req.params.id;
 
-//   Building.update(req.body, {
-//     where: { id: id },
-//   })
-//     .then((num) => {
-//       if (num == 1) {
-//         res.send({
-//           message: 'Building was updated successfully.',
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot update Building with id=${id}. Maybe Building was not found or req.body is empty!`,
-//         });
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message: `Error updating Building with id=${id}.`,
-//       });
-//     });
-// };
+  Building.update(req.body, {
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: 'Building was updated successfully.',
+        });
+      } else {
+        res.send({
+          message: `Cannot update Building with id=${id}. Maybe Building was not found or req.body is empty!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Error updating Building with id=${id}.`,
+      });
+    });
+};
 
-// exports.delete = (req, res) => {
-//   const id = req.params.id;
+exports.delete = (req, res) => {
+  const id = req.params.id;
 
-//   Building.destroy({
-//     where: { id: id },
-//   })
-//     .then((num) => {
-//       if (num == 1) {
-//         res.send({
-//           message: 'Building was deleted successfully!',
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot delete Building with id=${id}. Maybe Building was not found!`,
-//         });
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message: `Could not delete Building with id=${id}.`,
-//       });
-//     });
-// };
+  Building.destroy({
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: 'Building was deleted successfully!',
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Building with id=${id}. Maybe Building was not found!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Could not delete Building with id=${id}.`,
+      });
+    });
+};
 
-// exports.deleteAll = (req, res) => {
-//   Building.destroy({
-//     where: {},
-//     truncate: false,
-//   })
-//     .then((nums) => {
-//       res.send({ message: `${nums} Buildings were deleted successfully!` });
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message:
-//           err.message || 'Some error occurred while removing all Building.',
-//       });
-//     });
-// };
+exports.deleteAll = (req, res) => {
+  Building.destroy({
+    where: {},
+    truncate: false,
+  })
+    .then((nums) => {
+      res.send({ message: `${nums} Buildings were deleted successfully!` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while removing all Building.',
+      });
+    });
+};
