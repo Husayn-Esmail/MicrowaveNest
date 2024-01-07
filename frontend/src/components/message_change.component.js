@@ -7,7 +7,6 @@ export default class MessageChangeForm extends Component {
     super(props);
     this.onChangeMessage = this.onChangeMessage.bind(this);
     this.onSaveMessage = this.onSaveMessage.bind(this);
-    // this.onClickHandler = this.onClickHandler.bind(this);
 
     this.state = {
       newMessage: '',
@@ -16,50 +15,35 @@ export default class MessageChangeForm extends Component {
   }
 
   onChangeMessage(e) {
-    console.log('onChangeMessage');
-    console.log(e);
-    if (e?.target?.value) {
-      this.setState({
-        messsage: e?.target?.value,
-      });
-    }
+    this.setState({
+      newMessage: e.target.value,
+    });
   }
 
   onSaveMessage(e) {
     var data = {
-      newMessage: this.state.message,
+      newMessage: this.state.newMessage,
 
       saveMessage: true,
     };
-
+    console.log(`this.state.newMessage: ${this.state.newMessage}`);
     MessageDataService.changeMessage(data)
       .then((response) => {
+        console.log(`response data in onsave${JSON.stringify(response.data)}`);
         this.setState({
-          newMesssage: response.data.message,
-
+          newMessage: response.data.saveMessage,
           saveMessage: true,
         });
-        console.log('response.data');
+        console.log(`response.data: ${response.data.message}`);
       })
       .catch((e) => {
         console.log(e);
       });
   }
 
-  //   onSaveMessage() {
-  //     console.log('hello');
-  //     axios
-  //       .post('http://localhost:8080/', this.state.message)
-  //       .then((response) => {
-  //         this.setState({ message: response.data });
-  //       })
-  //       .catch((error) => {
-  //         alert('something wrong');
-  //       });
-  //   }
-
   render() {
-    const { message } = this.state;
+    const message = this.state.newMessage;
+    console.log(`message in render: ${message}`);
 
     return (
       <div className="submit-form">
