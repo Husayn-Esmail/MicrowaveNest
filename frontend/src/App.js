@@ -18,12 +18,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{message}</h1>
-      <MessageChangeForm />
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <a href="/buildings" className="navbar-brand">
-            MicrowaveNest
+            <h1>{message}</h1>
           </a>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
@@ -41,10 +39,10 @@ function App() {
 
         <div className="container mt-3">
           <Routes>
-            <Route path="/" element={<BuildingsList />} />
+            <Route path="/" element={<MessageChangeForm />} />
             <Route path="/buildings" element={<BuildingsList />} />
             <Route path="/add" element={<AddBuilding />} />
-            {/* <Route path="/buidlings/:id" element={<Building/>} /> */}
+            {/* <Route path="/buildings/:id" element={<Building />} /> */}
           </Routes>
         </div>
       </div>

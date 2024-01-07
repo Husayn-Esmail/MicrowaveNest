@@ -90,7 +90,7 @@ export default class BuildingList extends Component {
       this.state;
 
     return (
-      <div className="list row">
+      <div className="list row text-center">
         <div className="col-md-8">
           <div className="input-group mb-3">
             <input
@@ -137,36 +137,38 @@ export default class BuildingList extends Component {
             Remove All
           </button> */}
         </div>
-        <div className="col-md-6">
-          {currentBuilding ? (
-            <div>
-              <h4>Building</h4>
+        <div className="container">
+          <div className="row col-md-6">
+            {currentBuilding ? (
               <div>
-                <label>
-                  <strong>Name:</strong>
-                </label>{' '}
-                {currentBuilding.name}
-              </div>
-              <div>
-                <label>
-                  <strong>Building Hours:</strong>
-                </label>{' '}
-                {currentBuilding.building_hours}
-              </div>
+                <h4>Building</h4>
+                <div>
+                  <label>
+                    <strong>Name:</strong>
+                  </label>{' '}
+                  {currentBuilding.name}
+                </div>
+                <div>
+                  <label>
+                    <strong>Building Hours:</strong>
+                  </label>{' '}
+                  {currentBuilding.building_hours}
+                </div>
 
-              <Link
-                to={'/buildings/' + currentBuilding.id}
-                className="badge badge-warning"
-              >
-                Edit
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <br />
-              <p>Please click on a Building...</p>
-            </div>
-          )}
+                <Link
+                  to={'/buildings/' + currentBuilding.id}
+                  className="badge badge-warning"
+                >
+                  Edit
+                </Link>
+              </div>
+            ) : (
+              <div className="row">
+                <br />
+                <p>Please click on a Building...</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
