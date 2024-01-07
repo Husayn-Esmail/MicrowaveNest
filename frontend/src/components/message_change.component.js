@@ -11,6 +11,7 @@ export default class MessageChangeForm extends Component {
     this.state = {
       newMessage: '',
       saveMessage: false,
+      displayMessage: '',
     };
   }
 
@@ -35,6 +36,7 @@ export default class MessageChangeForm extends Component {
           saveMessage: true,
         });
         console.log(`response.data: ${response.data.message}`);
+        alert(`you entered ${this.state.newMessage}`);
       })
       .catch((e) => {
         console.log(e);
@@ -47,6 +49,7 @@ export default class MessageChangeForm extends Component {
 
     return (
       <div className="submit-form">
+        <h1>{this.state.newMessage}</h1>
         {this.state.saveMessage ? (
           <div>
             <h4>You changed the message successfully</h4>

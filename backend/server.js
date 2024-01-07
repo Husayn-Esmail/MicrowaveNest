@@ -4,10 +4,6 @@ const cors = require('cors');
 
 const app = express();
 
-// var corsOptions = {
-//   origin: 'http://localhost:8081',
-// };
-
 app.use(cors());
 
 // parse requess of content-type - application/json
@@ -15,6 +11,9 @@ app.use(bodyParser.json());
 
 // parse
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const db = require('./models');
+db.sequelize.sync();
 
 let responseData = { message: 'suck on it' };
 
@@ -24,11 +23,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-  console.log(req.body);
-  const newMessage = req.body.message;
-  console.log('STOP POSTING ME');
+  const newMessage = req.body.newMessage;
   responseData.message = newMessage;
-  res.send('message updated successfully');
+  res.send(responseData.message);
+  console.log('Successfully posted');
 });
 
 // set port, listn for requests
